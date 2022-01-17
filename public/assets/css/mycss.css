@@ -1,0 +1,124 @@
+/* !Hidden Input Number Appreance */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* !END Hidden Input Number */
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .show>.nav-link {
+    color: #fff;
+    color: #0d6efd;
+    /* border-radius: 25%; */
+    /* text-decoration: underline; */
+    padding-bottom: 1px;
+    border-bottom: 3px solid #0d6efd;
+}
+
+.b-example-divider {
+    height: 2rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+}
+
+.nav-pendaftaran {
+    /* position: fixed; */
+    left: 0;
+    right: 0;
+    background-color: #FFFFFF;
+    /* margin-bottom: 30rem; */
+    /* bottom: 0; */
+    /* height: 100%; */
+    /* background: #000; */
+}
+
+
+.content-pendaftaran {
+    /* margin-top: 6rem; */
+    margin-top: 3rem;
+    margin-bottom: 8rem;
+}
+
+.content {
+    margin-bottom: 8rem;
+}
+
+/* !EXTRA SMALL */
+@media screen and (min-width: 150px) and (max-width: 300px) {
+    .content-pendaftaran {
+        margin-top: 10rem;
+        margin-bottom: 8rem;
+    }
+
+    .content {
+        margin-bottom: 8rem;
+    }
+}
+
+/* .nav-content {
+    margin-left: 10rem; */
+/* height: 500px; */
+/* width: 100%;
+    position: relative; */
+/* background: #f00; */
+/* overflow: auto;
+    z-index: 1;
+} */
+
+.footer {
+    position: fixed;
+    margin-top: 6rem;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #F8F9FA;
+    color: white;
+    text-align: center;
+    z-index: 2;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    /* color: #fff;
+    background-color: #0d6efd; */
+    font-weight: 700;
+}
+
+.list-group-item-light.list-group-item-action.active {
+    color: #fff;
+    background-color: #468AF0;
+    border-bottom: 4px solid #FC266B;
+    /* border-color: #636464; */
+    font-weight: 700;
+    border-radius: 0px 0px 20px 0px;
+}
+
+.list-group-item-light {
+    /* color: #636464;
+    background-color: #fefefe; */
+    font-weight: 500;
+}
+
+.myicon:hover {
+    background-color: rgba(126, 126, 126, 0.082);
+}
+
+/* footer {
+    display: block;
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
+} */
