@@ -45,7 +45,7 @@
     </div>
     <div class="container-fluid">
         <div class="table-responsive">
-            <table class="table table-sm display nowrap" id="tb_siswa">
+            <table class="table table-sm display" id="tb_siswa">
               <thead>
                   <th>No</th>
                   <th>ID Pendaftaran</th>
