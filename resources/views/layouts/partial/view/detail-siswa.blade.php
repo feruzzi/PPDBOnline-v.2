@@ -113,7 +113,29 @@
             <label class="fw-bold px-2">Berkas Siswa</label>    
           </p>
           <div class="row">
-              @foreach($data_berkas as $berkas)
+            @foreach ($siswa->berkas as $berkas)
+            <div class="col-sm-6 col-lg-4">
+              <div class="container text-center">
+                @if(substr($berkas->berkas,-3)=="pdf")
+                  <img src="{{asset('assets/icons/pdf-icon.svg')}}" class="d-inline" style="width:200px;height:280px"/>
+                  <br>  
+                  <a href="{{url($berkas->berkas)}}" target="_blank" class="btn btn-primary">Download File PDF</a>
+                @else
+                  <img src="{{$berkas->berkas}}" style="width:200px;height:280px"/>  
+                @endif                        
+                  {{-- <p class="fw-bold">{{$berkas->nama_berkas}}</p>---}}
+                  <form action="{{url('siswa/berkas')}}" method="post">
+                    @method('put')
+                    @csrf
+                    <div class="input-group my-3">
+                      <span class="input-group-text" id="basic-addon1">{{$berkas->nama_berkas}}</span>
+                      <input type="number" class="form-control" placeholder="Nilai Berkas" aria-label="Nilai Berkas" aria-describedby="basic-addon1" name="nilai_berkas[]" value="{{$berkas->nilai_berkas}}">
+                    </div>
+                    <input type="hidden" name="nama_berkas[]" value="{{$berkas->berkas}}">
+                  </div>
+                </div>    
+            @endforeach
+              {{-- @foreach($data_berkas as $berkas)
                 @if($berkas->id_pendaftaran_berkas==$siswa->id_pendaftaran)
                 <div class="col-sm-6 col-lg-4">
                     <div class="container text-center">
@@ -123,8 +145,7 @@
                         <a href="{{url($berkas->berkas)}}" target="_blank" class="btn btn-primary">Download File PDF</a>
                       @else
                         <img src="{{$berkas->berkas}}" style="width:200px;height:280px"/>  
-                      @endif                        
-                        {{-- <p class="fw-bold">{{$berkas->nama_berkas}}</p>---}}
+                      @endif                                                
                         <form action="{{url('siswa/berkas')}}" method="post">
                           @method('put')
                           @csrf
@@ -136,7 +157,7 @@
                         </div>
                       </div>    
                       @endif
-                      @endforeach
+                      @endforeach --}}
                       <input type="hidden" name="id_siswa" value="{{$siswa->id}}">
                         <button type="submit" class="btn btn-primary"><img src="{{asset('assets/icons/save.svg')}}" alt=""> Simpan Nilai Berkas</button>
                         </form>

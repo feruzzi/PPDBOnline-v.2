@@ -42,11 +42,11 @@ class SiswaController extends Controller
             'filter' => Pendaftaran::all()->last(),
             'username' => 'Username',
             'data_pendaftaran' => Pendaftaran::all(),
-            'data_berkas' => Berkas::all(),
+            // 'data_berkas' => Berkas::all(),
             // 'data_kelas' => DetailPendaftaran::where('detail_kode_pendaftaran', $formatid)->get(),
             'data_kelas' => Kelas::all(),
             // 'data_siswa' => Siswa::search('id_pendaftaran', $formatid)->get(),
-            'data_siswa' => $siswa->get(),
+            'data_siswa' => $siswa->with('berkas')->get(),
         ]);
     }
 
@@ -73,7 +73,7 @@ class SiswaController extends Controller
             'filter' => Pendaftaran::all()->last(),
             'username' => 'Username',
             'data_pendaftaran' => Pendaftaran::all(),
-            'data_berkas' => Berkas::all(),
+            // 'data_berkas' => Berkas::all(),
             'data_kelas' => $data_kelas,
             'data_siswa' => $siswa->get(),
         ]);

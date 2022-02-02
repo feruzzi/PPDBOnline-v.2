@@ -20,10 +20,10 @@ class PendaftaranController extends Controller
     {
         return view('dashboard.pendaftaran', [
             'title' => "Pendaftaran",
-            'data_detail_pendaftaran' => DetailPendaftaran::all(),
+            'data_detail_pendaftaran' => DetailPendaftaran::with('kelas')->get(),
             'data_pendaftaran' => Pendaftaran::all(),
             'data_kelas' => Kelas::all(),
-            'data_kelass' => DetailPendaftaran::with('Kelas')->get(),
+            // 'data_kelass' => DetailPendaftaran::with('Kelas')->get(),
             'data_set_daftar' => DB::table('set_pendaftaran')->where('id', 1)->value('set_kode_pendaftaran'),
         ]);
     }

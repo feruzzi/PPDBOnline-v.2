@@ -14,6 +14,6 @@ class Berkas extends Model
     ];
     public function siswa()
     {
-        return $this->belongsTo(Siswa::class, 'username_berkas', 'username_siswa');
+        return $this->belongsTo(Siswa::class, 'id_pendaftaran_berkas', 'id_pendaftaran');
     }
 }
