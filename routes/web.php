@@ -30,6 +30,9 @@ Route::get('/login-auth', [PagesController::class, 'login_auth']);
 Route::post('/auth', [LoginController::class, 'login']);
 Route::post('/auth-siswa', [LoginController::class, 'login_siswa']);
 Route::post('/register', [UsersController::class, 'register']);
+Route::post('/lupa-password', [UsersController::class, 'lupa_password']);
+Route::get('/lupa-password/{email}', [PagesController::class, 'reset_password']);
+Route::put('/reset-password/{id}', [UsersController::class, 'reset_password']);
 Route::get('/verify/{token}', [UsersController::class, 'verify']);
 
 Route::middleware(['auth', 'ceklevel:0,1'])->group(function () {

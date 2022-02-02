@@ -115,4 +115,12 @@ class PagesController extends Controller
             'username' => 'Username',
         ]);
     }
+    public function reset_password($email)
+    {
+        // $user = User::where('remember_token', $email)->first();
+        return view('reset-password', [
+            'title' => 'Reset Password',
+            'data_user' => User::where('remember_token', $email)->first(),
+        ]);
+    }
 }

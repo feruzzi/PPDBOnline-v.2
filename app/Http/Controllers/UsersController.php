@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Exception;
 use App\Mail\kirimEmail;
+use App\Mail\lupaEmail;
 use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
@@ -85,17 +86,45 @@ class UsersController extends Controller
         // dd($validatedData);
         User::create($validatedData);
         $details = [
-            'title' => 'Aktifasi Akun',
-            'body' => 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, totam. Dolor repellendus atque quos nihil, ipsa consequatur eos dolore magnam dicta maxime saepe sed debitis accusantium est quia cupiditate qui.
-            Laudantium tenetur, aliquam nobis similique numquam dicta eveniet provident. Animi, ipsa libero? Dolorum quo rerum expedita impedit nesciunt quis necessitatibus et dolor doloribus. Nam in eum, quod sunt cumque veritatis.
-            Facere porro expedita animi repudiandae asperiores deleniti necessitatibus voluptatum illo quam sint, laborum corrupti aperiam impedit commodi officia maiores laboriosam doloribus vitae harum enim? Ipsum sequi pariatur odit minus ea!
-            Saepe voluptate corrupti quidem enim vel quia eos sed excepturi distinctio temporibus quo consectetur officia velit fugiat esse dolorem nobis possimus cumque earum labore sunt, asperiores iure quos error? Illum?',
-            'link' => 'http://ppdb.test:8081/verify/' . $validatedData['remember_token'],
+            'title' => 'Aktivasi Akun',
+            'body' => 'Email ini merupakan email yang digunakan untuk aktivasi Akun Anda, jika Anda tidak merasa mendaftar silahkan hiraukan pesan ini.',
+            'link' => url('verify/' . $validatedData['remember_token']),
         ];
         // $subject = User::where('remember_token', $validatedData['remember_token'])->pluck('username')->first();
 
         Mail::to($request->email)->send(new kirimEmail($details));
         return redirect('/login-siswa')->with('success', 'Berhasil Melakukan Registrasi Akun Silahkan Cek EMAIL yang didaftarkan !');
+    }
+    public function lupa_password(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        // dd($user);
+        // $user = User::where('email', $request->email)->first();
+        if (User::where('email', $request->email)->first()) {
+            $email = hash('sha256', $request->email);
+            $details = [
+                'title' => 'Reset Password',
+                'body' => 'Username Anda adalah ' . $user->username . ' Klik Link dibawah untuk Reset Password',
+                'link' => url('lupa-password/' . $email),
+            ];
+            Mail::to($request->email)->send(new lupaEmail($details));
+            return redirect('/login-siswa')->with('success', 'Link Reset Password Telah dikirim ke Email !');
+        } else {
+            return redirect('/login-siswa')->with('delete', 'Email Tidak Terdaftar !');
+        }
+    }
+    public function reset_password(Request $request, $id)
+    {
+        try {
+            $validatedData = $request->validate([
+                'password' => 'required|min:4',
+            ]);
+            $validatedData['password'] = bcrypt($validatedData['password']);
+            User::where('id', $id)->update($validatedData);
+            return redirect('/')->with('success', 'Berhasil Mereset Akun !');
+        } catch (Exception $e) {
+            return redirect('/')->with('delete', 'Gagal Mereset Akun !');
+        }
     }
     public function verify_by_admin($token)
     {

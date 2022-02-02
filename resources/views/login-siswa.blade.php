@@ -37,8 +37,8 @@
                       <button type="submit" class="btn btn-primary ms-auto">Login</button>
                 </div>
                 <div class="d-flex"> 
-                  <a href="#modalLupaPassword">Lupa Password</a>                     
-                      <a id="daftar-akun" data-bs-toggle="modal" href="#modalDaftarAkun" class="ms-auto">Belum Punya Akun ?</a>                    
+                  <a id="lupa-password" data-bs-toggle="modal" href="#modalLupaPassword">Lupa Password</a>                     
+                  <a id="daftar-akun" data-bs-toggle="modal" href="#modalDaftarAkun" class="ms-auto">Belum Punya Akun ?</a>                    
                   </div>
               </form>
             </div>
@@ -106,7 +106,40 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary"><img src="{{asset('assets/icons/save.svg')}}" alt=""> Simpan</button>
+          <button type="submit" class="btn btn-primary"><img src="{{asset('assets/icons/save.svg')}}" alt=""> Daftar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalLupaPassword" tabindex="-1" aria-labelledby="modalLupaPasswordLabel" aria-hidden="true"> <!-- Modal Lupa Passowrd-->
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLupaPasswordLabel">Lupa Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/lupa-password" method="post">
+          @csrf
+          <div class="row">
+            <div class="col-sm-12 col-lg-12">
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="email" value="{{old('email')}}">
+                <label for="floatingInput">Email <sub class="text-danger">(Email yang didaftarkan)</sub></label>
+                @error('email')
+                <div class="invalid-feedback">
+                    {{$message}}
+                </div>
+                @enderror
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary"><img src="{{asset('assets/icons/save.svg')}}" alt=""> Submit</button>
         </form>
       </div>
     </div>
