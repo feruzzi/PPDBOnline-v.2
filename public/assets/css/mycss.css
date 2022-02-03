@@ -122,3 +122,11 @@ input[type=number] {
     bottom: 0;
     width: 100%;
 } */
+
+.mycard-title {
+    font-size: calc(36px + 4vw);
+}
+
+/* .mycard-body {
+    font-size: calc(12px + vw);
+} */
