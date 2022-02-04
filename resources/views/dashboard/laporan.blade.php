@@ -6,9 +6,9 @@
         <form action="{{url('data-laporan')}}">
         <div class="form-floating my-3 d-flex">
                 <select class="form-select @error('cari') is-invalid @enderror" id="cari" name="cari" aria-label="tahun_pendaftaran">
-                    <option selected>{{$filter->nama_pendaftaran}}</option>
+                    {{-- <option selected>{{$filter->nama_pendaftaran}}</option> --}}
                     @foreach($data_pendaftaran as $pendaftaran)
-                    <option value="{{$pendaftaran->kode_pendaftaran}}">{{$pendaftaran->nama_pendaftaran}}</option>
+                    <option {{($detail_pendaftaran->kode_pendaftaran===$pendaftaran->kode_pendaftaran)?'selected':''}} value="{{$pendaftaran->kode_pendaftaran}}">{{$pendaftaran->nama_pendaftaran}}</option>
                     @endforeach                                          
                 </select>
                 <label for="cari">Tahun</label>
@@ -25,6 +25,7 @@
         </form>
     </div>
     <h1 class="text-center">Laporan Pendaftaran</h1>
+    <h2 class="text-center">{{$detail_pendaftaran->nama_pendaftaran}}</h2>
     <div class="row">
         <div class="col-sm-12 col-lg-3 py-3">
             <div class="card shadow border border-5">
@@ -114,7 +115,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>    
         <div class="modal-body">
-            <p>Export Data Pendaftaran <b>{{$export_pendaftaran}}</b></p>
+            <p>Export Data Pendaftaran <b>{{$detail_pendaftaran->nama_pendaftaran}} ({{$detail_pendaftaran->kode_pendaftaran}})</b></p>
         </div>    
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

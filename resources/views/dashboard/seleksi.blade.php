@@ -28,9 +28,9 @@
             <form action="{{url('seleksi')}}">
             <div class="form-floating my-3 d-flex">
                     <select class="form-select @error('cari') is-invalid @enderror" id="cari" name="cari" aria-label="tahun_pendaftaran">
-                        <option selected>{{$filter->nama_pendaftaran}}</option>
+                        {{-- <option selected>{{$filter->nama_pendaftaran}}</option> --}}
                         @foreach($data_pendaftaran as $pendaftaran)
-                        <option value="{{$pendaftaran->kode_pendaftaran}}">{{$pendaftaran->nama_pendaftaran}}</option>
+                        <option {{($detail_pendaftaran->kode_pendaftaran===$pendaftaran->kode_pendaftaran)?'selected':''}} value="{{$pendaftaran->kode_pendaftaran}}">{{$pendaftaran->nama_pendaftaran}}</option>
                         @endforeach                                          
                     </select>
                     <label for="cari">Tahun</label>
@@ -45,6 +45,8 @@
         </div>
     </div>
     <div class="container-fluid">
+        <h1 class="text-center">Seleksi</h1>
+        <h2 class="text-center">{{$detail_pendaftaran->nama_pendaftaran}}</h2>
         <div class="table-responsive">
             <table class="table table-sm">
               <thead>

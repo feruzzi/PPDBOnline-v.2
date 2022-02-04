@@ -26,17 +26,21 @@ class SiswaController extends Controller
         // dd(request('cari'));
         $formatid = DB::table('set_pendaftaran')->where('id', 1)->value('set_kode_pendaftaran');
         // $siswa = Siswa::oldest();
+        $formatid = Pendaftaran::where('kode_pendaftaran', $formatid)->first();
         $siswa = Siswa::selectRaw('*, nilai_bindo+nilai_matematika+nilai_ipa+rapot_bindo+rapot_matematika+rapot_ipa+rapot_bing+total_nilai_berkas AS total')->orderBy('total', 'desc');
         if (request('cari')) {
             // $siswa->where('id_pendaftaran', 'like', '%' . request('cari') . '%');
+            $formatid = Pendaftaran::where('kode_pendaftaran', request('cari'))->first();
             $siswa->where('jalur', request('cari'));
         } elseif ($formatid != null) {
             // $siswa->where('id_pendaftaran', 'like', '%' . $formatid . '%');
-            $siswa->where('jalur', $formatid);
-        } else {
-            $formatid = Pendaftaran::pluck('kode_pendaftaran')->last();
-            $siswa->where('jalur', $formatid);
+            $siswa->where('jalur', $formatid->kode_pendaftaran);
         }
+        // else {
+        //     // $formatid = Pendaftaran::pluck('kode_pendaftaran')->last();
+        //     $formatid = Pendaftaran::where('kode_pendaftaran', $formatid)->last();
+        //     $siswa->where('jalur', $formatid->kode_pendaftaran);
+        // }
         return view('dashboard.siswa', [
             'title' => 'Siswa',
             'filter' => Pendaftaran::all()->last(),
@@ -47,35 +51,40 @@ class SiswaController extends Controller
             'data_kelas' => Kelas::all(),
             // 'data_siswa' => Siswa::search('id_pendaftaran', $formatid)->get(),
             'data_siswa' => $siswa->with('berkas')->get(),
+            'detail_pendaftaran' => $formatid,
         ]);
     }
 
     public function seleksi()
     {
         $formatid = DB::table('set_pendaftaran')->where('id', 1)->value('set_kode_pendaftaran');
+        $formatid = Pendaftaran::where('kode_pendaftaran', $formatid)->first();
         $siswa = Siswa::selectRaw('*, nilai_bindo+nilai_matematika+nilai_ipa+rapot_bindo+rapot_matematika+rapot_ipa+rapot_bing+total_nilai_berkas AS total')->orderBy('total', 'desc');
         if (request('cari')) {
             // $siswa->where('id_pendaftaran', 'like', '%' . request('cari') . '%')->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal');
+            $formatid = Pendaftaran::where('kode_pendaftaran', request('cari'))->first();
             $siswa->where('jalur', request('cari'))->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal');
             $data_kelas = DetailPendaftaran::where('detail_kode_pendaftaran', 'like', '%' . request('cari') . '%')->get();
         } elseif ($formatid != null) {
             // $siswa->where('id_pendaftaran', 'like', '%' . $formatid . '%')->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal');
-            $siswa->where('jalur', $formatid)->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal');
-            $data_kelas = DetailPendaftaran::where('detail_kode_pendaftaran', $formatid)->get();
-        } else {
-            $formatid = Pendaftaran::pluck('kode_pendaftaran')->last();
-            // $siswa->where('id_pendaftaran', 'like', '%' . $formatid . '%')->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal');
-            $siswa->where('jalur', $formatid)->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal');
-            $data_kelas = DetailPendaftaran::where('detail_kode_pendaftaran', $formatid)->get();
+            $siswa->where('jalur', $formatid->kode_pendaftaran)->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal');
+            $data_kelas = DetailPendaftaran::where('detail_kode_pendaftaran', $formatid->kode_pendaftaran)->get();
         }
+        // else {
+        //     $formatid = Pendaftaran::pluck('kode_pendaftaran')->last();
+        //     // $siswa->where('id_pendaftaran', 'like', '%' . $formatid . '%')->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal');
+        //     $siswa->where('jalur', $formatid)->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal');
+        //     $data_kelas = DetailPendaftaran::where('detail_kode_pendaftaran', $formatid)->get();
+        // }
         return view('dashboard.seleksi', [
             'title' => 'Seleksi',
-            'filter' => Pendaftaran::all()->last(),
+            // 'filter' => Pendaftaran::all()->last(),
             'username' => 'Username',
             'data_pendaftaran' => Pendaftaran::all(),
             // 'data_berkas' => Berkas::all(),
             'data_kelas' => $data_kelas,
             'data_siswa' => $siswa->get(),
+            'detail_pendaftaran' => $formatid,
         ]);
     }
 
