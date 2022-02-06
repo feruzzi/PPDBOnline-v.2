@@ -19,7 +19,7 @@ class CreateTableBerkas extends Migration
             $table->string('berkas')->nullable();
             $table->string('nama_berkas')->nullable();
             $table->float('nilai_berkas')->default('0');
-            $table->foreign('id_pendaftaran_berkas')->references('id_pendaftaran')->on('siswa')->restrictOnDelete()->restrictOnUpdate();
+            $table->foreign('id_pendaftaran_berkas')->references('id_pendaftaran')->on('siswa')->cascadeOnDelete()->restrictOnUpdate();
             $table->timestamps();
         });
     }
