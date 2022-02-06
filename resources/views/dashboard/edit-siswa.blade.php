@@ -72,10 +72,10 @@
       <div class="col-sm-12 col-lg-9">
         <div class="form-floating mb-3">
           <select class="form-select @error('jalur') is-invalid @enderror" id="jalur" name="jalur" aria-label="jalur" value="{{old('jalur')}}">
-            <option selected value="{{$siswa->jalur}}">{{$siswa->jalur}}</option>
+            {{-- <option selected value="{{$siswa->jalur}}">{{$siswa->jalur}}</option> --}}
             @foreach($data_pendaftaran as $pendaftaran)
               @if($pendaftaran->nama_pendaftaran!=$siswa->jalur)
-              <option value="{{$pendaftaran->nama_pendaftaran}}">{{$pendaftaran->nama_pendaftaran}} ({{$pendaftaran->kode_pendaftaran}})</option>
+              <option {{($siswa->jalur===$pendaftaran->kode_pendaftaran)?'selected':''}} value="{{$pendaftaran->kode_pendaftaran}}">{{$pendaftaran->nama_pendaftaran}} ({{$pendaftaran->kode_pendaftaran}})</option>
               @endif
             @endforeach
           </select>

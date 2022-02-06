@@ -217,15 +217,15 @@ class SiswaController extends Controller
             'pilihan_1' => 'required',
             'pilihan_2' => 'required',
         ]);
-        if ($request->file('foto')) {
-            $validatedData['foto'] = $request->file('foto')->store('img/foto');
-        }
         // $validatedData_berkas = $request->validate([
         //     'berkas_un' => 'required|image|file|max:1024',
         //     'berkas_rapot' => 'required|image|file|max:1024',
         //     'sertifikat' => 'image|file|max:1024',
         // ]);
         $validatedData['id_pendaftaran'] = IdGenerator::generate(['table' => 'siswa', 'field' => 'id_pendaftaran', 'length' => strlen($formatid) + 3, 'prefix' => $formatid, 'reset_on_prefix_change' => true]);
+        if ($request->file('foto')) {
+            $validatedData['foto'] = $request->file('foto')->storeAs('img/foto', $validatedData['id_pendaftaran'] . "." . $request->file('foto')->getClientOriginalExtension());
+        }
         $validatedData['username_siswa'] = auth()->user()->username;
         $jalur = SetPendaftaran::where('id', 1)->first();
         // dd($jalur->dtl_pendaftaran->nama_pendaftaran);
@@ -238,7 +238,7 @@ class SiswaController extends Controller
                     'desc_' . $i => 'required',
                 ];
                 // dd($rules_berkas);
-                $validatedData_berkas['berkas'] = $request->file('berkas_' . $i)->store('img/berkas_' . $i);
+                $validatedData_berkas['berkas'] = $request->file('berkas_' . $i);
                 $validatedData_berkas['nama_berkas'] = $request->validate($rules_berkas)['desc_' . $i];
                 // Berkas::create($validatedData_berkas);
             }
@@ -252,7 +252,7 @@ class SiswaController extends Controller
                     'desc_' . $i => 'required',
                 ];
                 // dd($rules_berkas);
-                $validatedData_berkas['berkas'] = $request->file('berkas_' . $i)->store('img/berkas_' . $i);
+                $validatedData_berkas['berkas'] = $request->file('berkas_' . $i)->storeAs('img/berkas_' . $i, $validatedData['id_pendaftaran'] . "." . $request->file('berkas_' . $i)->getClientOriginalExtension());
                 $validatedData_berkas['nama_berkas'] = $request->validate($rules_berkas)['desc_' . $i];
                 Berkas::create($validatedData_berkas);
             }
@@ -407,7 +407,7 @@ class SiswaController extends Controller
         $validatedData['username_admin'] = auth()->user()->username;
         // $jalur = SetPendaftaran::where('id', 1)->first();
         if ($siswa->jalur != $request->jalur) {
-            $validatedData['id_pendaftaran'] = IdGenerator::generate(['table' => 'siswa', 'field' => 'id_pendaftaran', 'length' => strlen($formatid) + 3, 'prefix' => $formatid, 'reset_on_prefix_change' => true]);
+            // $validatedData['id_pendaftaran'] = IdGenerator::generate(['table' => 'siswa', 'field' => 'id_pendaftaran', 'length' => strlen($formatid) + 3, 'prefix' => $formatid, 'reset_on_prefix_change' => true]);
             $validatedData['jalur'] = $request->jalur;
         }
         for ($i = 0; $i <= $request->jml; $i++) {
@@ -416,15 +416,15 @@ class SiswaController extends Controller
                     'berkas_' . $i => 'required|file|mimes:png,jpg,jpeg,pdf|max:1024',
                     'desc_' . $i => 'required',
                 ];
-                $validatedData_berkas['berkas'] = $request->file('berkas_' . $i)->store('img/berkas_' . $i);
+                $validatedData_berkas['berkas'] = $request->file('berkas_' . $i);
                 $validatedData_berkas['nama_berkas'] = $request->validate($rules_berkas)['desc_' . $i];
             }
         }
         Siswa::where('id', $siswa->id)->update($validatedData);
         $berkas = Berkas::where('id_pendaftaran_berkas', $siswa->id_pendaftaran)->pluck('id_pendaftaran_berkas')->first();
-        if ($siswa->jalur != $request->jalur) {
-            $validatedData_berkas['id_pendaftaran_berkas'] = $validatedData['id_pendaftaran'];
-        }
+        // if ($siswa->jalur != $request->jalur) {
+        //     $validatedData_berkas['id_pendaftaran_berkas'] = $validatedData['id_pendaftaran'];
+        // }
         $validatedData_berkas['id_pendaftaran_berkas'] = $siswa->id_pendaftaran;
         for ($i = 0; $i <= $request->jml; $i++) {
             if ($request->file('berkas_' . $i)) {
@@ -432,7 +432,7 @@ class SiswaController extends Controller
                     'berkas_' . $i => 'required|file|mimes:png,jpg,jpeg,pdf|max:1024',
                     'desc_' . $i => 'required',
                 ];
-                $validatedData_berkas['berkas'] = $request->file('berkas_' . $i)->store('img/berkas_' . $i);
+                $validatedData_berkas['berkas'] = $request->file('berkas_' . $i)->storeAs('img/berkas_' . $i, $siswa->id_pendaftaran . "." . $request->file('berkas_' . $i)->getClientOriginalExtension());
                 $validatedData_berkas['nama_berkas'] = $request->validate($rules_berkas)['desc_' . $i];
                 // Berkas::create($validatedData_berkas);
                 // Berkas::where('berkas', $request->tmp_berkas_[$i])->update($validatedData_berkas);
