@@ -492,7 +492,14 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
-        //
+        File::delete(public_path($siswa->foto));
+        $jml_berkas = Berkas::where('id_pendaftaran_berkas', $siswa->id_pendaftaran)->count();
+        for ($i = 0; $i < $jml_berkas; $i++) {
+            File::delete(public_path($siswa->berkas[$i]->berkas));
+        }
+        Siswa::destroy($siswa->id);
+        // dd(public_path($siswa->foto));
+        return redirect('/data-siswa')->with('success', 'Data Berhasil Dihapus !');
     }
 
     public function set_terima(Siswa $siswa, $admin)
