@@ -69,9 +69,29 @@ class PagesController extends Controller
     }
     public function dashboard()
     {
+        $cek_pendaftaran = DB::table('set_pendaftaran')->where('id', 1)->value('set_kode_pendaftaran');
+        $pendaftaran = Pendaftaran::where('kode_pendaftaran', $cek_pendaftaran)->first();
+        if (is_null($cek_pendaftaran)) {
+            $pendaftaran = new pendaftaran;
+            $pendaftaran->kode_pendaftaran = "TUTUP";
+            // dd($pendaftaran->kode_pendaftaran);
+            $pendaftaran->nama_pendaftaran = "Pendaftaran Tutup";
+        }
+        // dd($pendaftaran->nama_pendaftaran);
+        $dtl_kelas = DetailPendaftaran::where('detail_kode_pendaftaran', $cek_pendaftaran)->get();
+        $kuota = 0;
+        foreach ($dtl_kelas as $kelas) {
+            $kuota += $kelas->kuota;
+        }
+        // dd($kuota);
+        $set_pengumuman = DB::table('set_pengumuman')->where('id', 1)->value('set_kode_pengumuman');
+        $pengumuman = Pengumuman::where('kode_pengumuman', $set_pengumuman)->first();
         return view('dashboard.dashboard', [
             'title' => 'Dashboard',
-            // 'username' => 'Username',
+            'pendaftaran' => $pendaftaran,
+            'data_kelas' => $dtl_kelas,
+            'pengumuman' => $pengumuman,
+            'kuota' => $kuota,
         ]);
     }
     public function data_users()
