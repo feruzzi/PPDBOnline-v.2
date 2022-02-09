@@ -22,6 +22,9 @@
         <p>
           <label class="fw-bold px-2">Nama Pendaftaran : </label><span id="dtl_nama_pendaftaran">{{$pendaftaran->nama_pendaftaran}}</span>
         </p>     
+        <p>
+          <label class="fw-bold px-2">Jumlah Berkas Dikumpul : </label><span id="dtl_jumlah_berkas">{{$pendaftaran->jumlah_berkas}}</span>
+        </p>     
         {{-- <p>
           <label class="fw-bold px-2">Kelas : </label><span id="dtl_kelas">____</span>
         </p>     --}}
@@ -80,6 +83,17 @@
                 <input type="text" class="form-control @error('nama_pendaftaran') is-invalid @enderror" id="edit_nama_pendaftaran" name="nama_pendaftaran" placeholder="Nama Pendaftaran" value="{{old('nama_pendaftaran',$pendaftaran->nama_pendaftaran)}}">
                 <label for="nama_pendaftaran">Nama Pendaftaran</label>
                 @error('nama_pendaftaran')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+                @enderror
+              </div>
+            </div>
+            <div class="col-sm-12 col-lg-8">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control @error('jumlah_berkas') is-invalid @enderror" id="edit_jumlah_berkas" name="jumlah_berkas" placeholder="Jumlah Berkas" value="{{old('jumlah_berkas',$pendaftaran->jumlah_berkas)}}">
+                <label for="jumlah_berkas">Jumlah Berkas</label>
+                @error('jumlah_berkas')
                 <div class="invalid-feedback">
                   {{$message}}
                 </div>

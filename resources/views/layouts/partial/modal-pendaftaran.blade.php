@@ -20,11 +20,22 @@
                 @enderror
               </div>
             </div>
-            <div class="col-sm-12 col-lg-8">
+            <div class="col-sm-12 col-lg-6">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control @error('nama_pendaftaran') is-invalid @enderror" id="nama_pendaftaran" name="nama_pendaftaran" placeholder="Nama Pendaftaran" value="{{old('nama_pendaftaran')}}">
                 <label for="nama_pendaftaran">Nama Pendaftaran</label>
                 @error('nama_pendaftaran')
+                <div class="invalid-feedback">
+                  {{$message}}
+                </div>
+                @enderror
+              </div>
+            </div>
+            <div class="col-sm-12 col-lg-2">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control @error('jumlah_berkas') is-invalid @enderror" id="jumlah_berkas" name="jumlah_berkas" placeholder="Jumlah Berkas" value="{{old('jumlah_berkas')}}">
+                <label for="jumlah_berkas">Jumlah Berkas</label>
+                @error('jumlah_berkas')
                 <div class="invalid-feedback">
                   {{$message}}
                 </div>

@@ -52,6 +52,7 @@ class PendaftaranController extends Controller
         $validatedData = $request->validate([
             'kode_pendaftaran' => 'required|max:16|unique:pendaftaran',
             'nama_pendaftaran' => 'required|max:32|min:4',
+            'jumlah_berkas' => 'required',
         ]);
         $validatedData['kode_pendaftaran'] = str_replace(" ", "", $validatedData['kode_pendaftaran']);
         Pendaftaran::create($validatedData);
@@ -112,6 +113,7 @@ class PendaftaranController extends Controller
         $kode = 0;
         $rules = [
             'nama_pendaftaran' => 'required|max:32|min:4',
+            'jumlah_berkas' => 'required',
         ];
         if ($request->kode_pendaftaran != $pendaftaran->kode_pendaftaran) {
             $rules['kode_pendaftaran'] = 'required|max:16|min:4|unique:pendaftaran';

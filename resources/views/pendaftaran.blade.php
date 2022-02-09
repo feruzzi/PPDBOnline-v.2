@@ -519,7 +519,7 @@
     <hr>
     <div class="container">
       <div class="row">        
-        @for($i=0;$i<=4;$i++)
+        @for($i=0;$i<$jumlah_berkas;$i++)
         <div class="col-sm-12 col-lg-3 m-3">
           <div class="text-center">
             <label for="berkas_{{$i}}">

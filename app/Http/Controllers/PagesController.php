@@ -23,6 +23,9 @@ class PagesController extends Controller
     {
         $cek_pendaftaran = DB::table('set_pendaftaran')->where('id', 1)->value('set_kode_pendaftaran');
         $dtl_kelas = DetailPendaftaran::where('detail_kode_pendaftaran', $cek_pendaftaran)->get();
+        $jumlah_berkas = Pendaftaran::where('kode_pendaftaran', $cek_pendaftaran)->first();
+        // dd($jumlah_berkas->jumlah_berkas);
+        $jumlah_berkas = $jumlah_berkas->jumlah_berkas;
         // dd($dtl_kelas);
         // dd($dtl_kelas->detail_kode_pendaftaran);        
         if (auth()->user()->email_verified_at == null) {
@@ -42,6 +45,7 @@ class PagesController extends Controller
             return view('pendaftaran', [
                 'title' => 'Pendaftaran',
                 'data_kelas' => $dtl_kelas,
+                'jumlah_berkas' => $jumlah_berkas,
             ]);
         }
     }
