@@ -1,7 +1,7 @@
 @extends('layouts/main-layout')
 @section('title',"$title")
 @section('content')
-<div class="container content">
+<div class="container content p-3">
     @if(session()->has('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{session('success')}}

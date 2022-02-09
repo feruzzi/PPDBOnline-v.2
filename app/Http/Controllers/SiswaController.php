@@ -12,6 +12,8 @@ use App\Models\DetailPendaftaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use App\Exports\SiswaExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Exception;
 
 class SiswaController extends Controller
@@ -536,5 +538,19 @@ class SiswaController extends Controller
             Siswa::where('id', $request->id_siswa)->update(['total_nilai_berkas' => $total]);
         }
         return redirect('/data-siswa')->with('success', 'Berhasil Melakukan Skor Berkas !');
+    }
+    public function daftar_ulang(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'nik' => 'required|digits:16',
+            'npsn' => 'required|digits:8',
+        ]);
+        $validatedData['status_du'] = 1;
+        Siswa::where('id', $id)->update($validatedData);
+        return redirect('/')->with('success', 'Berhasil Melakukan Daftar Ulang !');
+    }
+    public function export_siswa(Request $request)
+    {
+        return Excel::download(new SiswaExport($request->jalur), $request->jalur . '.xlsx');
     }
 }

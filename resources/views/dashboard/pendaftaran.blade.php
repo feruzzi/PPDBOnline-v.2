@@ -30,6 +30,7 @@
             <th>Nama Pendaftaran</th>
             <th>Kelas</th>              
             <th>Aksi</th>
+            <th>Daftar Ulang</th>
             <th>Status</th>
         </thead>
         <tbody>
@@ -66,6 +67,23 @@
                 </form>                
                   @include('layouts.partial.view.detail-pendaftaran')
                 </td>
+                {{-- DU option --}}
+                <td>
+                @if($pendaftaran->kode_pendaftaran==$data_set_du)
+                <form action="/set-du-tutup" method="post" class="d-inline">
+                  @method('put')
+                  @csrf
+                  <button class="badge btn btn-outline-light border-0" onclick="return confirm('Daftar Ulang {{$pendaftaran->kode_pendaftaran}} Akan ditutup ?')"><img src="{{asset('assets/icons/toggle-right.svg')}}" alt=""> Buka</button>
+              </form>
+                @else
+                <form action="/set-du-buka/{{$pendaftaran->id}}" method="post" class="d-inline">
+                    @method('put')
+                    @csrf
+                    <button class="badge btn btn-outline-light border-0" onclick="return confirm('Daftar Ulang {{$pendaftaran->kode_pendaftaran}} Akan dibuka ?')"><img src="{{asset('assets/icons/toggle-left.svg')}}" alt=""> Tutup</button>
+                </form>
+                @endif
+                </td>
+                {{-- DU end  --}}
                 <td class="align-middle">
                   @if($pendaftaran->kode_pendaftaran==$data_set_daftar)
                   <h5><span class="badge bg-success">Sedang Dibuka</span></h5>

@@ -25,6 +25,7 @@ class PendaftaranController extends Controller
             'data_kelas' => Kelas::all(),
             // 'data_kelass' => DetailPendaftaran::with('Kelas')->get(),
             'data_set_daftar' => DB::table('set_pendaftaran')->where('id', 1)->value('set_kode_pendaftaran'),
+            'data_set_du' => DB::table('set_pendaftaran')->where('id', 2)->value('set_kode_pendaftaran'),
         ]);
     }
 
@@ -178,5 +179,18 @@ class PendaftaranController extends Controller
         // dd($pendaftaran->kode_pendaftaran);
         DB::table('set_pendaftaran')->where('id', 1)->update(['set_kode_pendaftaran' => null]);
         return redirect('/data-pendaftaran')->with('delete', 'Pendaftaran ditutup !');
+    }
+
+    public function set_du_buka(Pendaftaran $pendaftaran)
+    {
+        // dd($pendaftaran->kode_pendaftaran);
+        DB::table('set_pendaftaran')->where('id', 2)->update(['set_kode_pendaftaran' => $pendaftaran->kode_pendaftaran]);
+        return redirect('/data-pendaftaran')->with('success', 'Daftar Ulang ' . $pendaftaran->nama_pendaftaran . ' Berhasil dibuka !');
+    }
+    public function set_du_tutup(Pendaftaran $pendaftaran)
+    {
+        // dd($pendaftaran->kode_pendaftaran);
+        DB::table('set_pendaftaran')->where('id', 2)->update(['set_kode_pendaftaran' => null]);
+        return redirect('/data-pendaftaran')->with('delete', 'Daftar Ulang ditutup !');
     }
 }

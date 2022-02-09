@@ -130,6 +130,13 @@ class PagesController extends Controller
             'username' => 'Username',
         ]);
     }
+    public function daftar_ulang()
+    {
+        return view('daftar-ulang', [
+            'title' => 'Daftar Ulang',
+            'username' => 'Username',
+        ]);
+    }
     public function data_laporan()
     {
         // dd(request('cari'));
@@ -204,6 +211,37 @@ class PagesController extends Controller
         return view('reset-password', [
             'title' => 'Reset Password',
             'data_user' => User::where('remember_token', $email)->first(),
+        ]);
+    }
+    public function cek_daftar_ulang($user)
+    {
+        // $user = User::where('remember_token', $email)->first();
+        $cek_du = Siswa::where('username_siswa', $user)->first();
+        // dd($cek_du->jalur);
+        $jalur_du = DB::table('set_pendaftaran')->where('id', 2)->value('set_kode_pendaftaran');
+        if ($cek_du->status_seleksi != "Seleksi" && $cek_du->status_seleksi != "Gagal" && $cek_du->status_seleksi != "Terverifikasi") {
+            $valid_du = "1";
+        } else {
+            $valid_du = "0";
+        }
+        // dd($valid_du);
+        if ($cek_du->jalur == $jalur_du && $valid_du == "1") {
+            // dd("Daftar Ulang");
+            // return redirect('/daftar-ulang/' . $cek_du->id_pendaftaran . '')->with('success', 'Selamat Anda dinyatakan LOLOS Seleksi, Silahkan Melakukan Daftar Ulang dengan Mengisi Form Daftar Ulang Berikut !');
+            return view('daftar-ulang', [
+                'title' => 'Daftar Ulang',
+                'siswa' => $cek_du,
+                'success' => 'Selamat Anda dinyatakan LOLOS Seleksi (kode: ' . $cek_du->jalur . '), Silahkan Melakukan Daftar Ulang dengan Mengisi Form Daftar Ulang Berikut !'
+                // 'data_user' => User::where('remember_token', $email)->first(),
+            ]);
+        } else if ($cek_du->jalur != $jalur_du && $valid_du == "1") {
+            return redirect('/')->with('delete', 'Form Daftar Ulang Pendaftaran (kode: ' . $cek_du->jalur . ') Belum dibuka');
+        } else {
+            return redirect('/')->with('delete', 'Maaf Anda Tidak/Belum Lolos Seleksi Pendaftaran (kode: ' . $cek_du->jalur . ')');
+        }
+        return view('daftar-ulang', [
+            'title' => 'Daftar Ulang',
+            // 'data_user' => User::where('remember_token', $email)->first(),
         ]);
     }
 }

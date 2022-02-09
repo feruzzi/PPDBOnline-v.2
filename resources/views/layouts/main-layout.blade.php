@@ -38,6 +38,9 @@
                   </li>   
                 </ul>
               </li>
+              <li class="nav-item">
+                <a class="nav-link {{($title==="Daftar Ulang")?'active':''}} text-primary" href="{{url('/cek-daftar-ulang/'.auth()->user()->username.'')}}">Daftar Ulang</a>
+              </li>
               @elseif(!Auth::check())
               <li class="nav-item">
                 <a class="nav-link {{($title==="Login")?'active':''}}" href="{{url('/login-siswa')}}">Login</a>

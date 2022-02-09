@@ -63,6 +63,8 @@ Route::middleware(['auth', 'ceklevel:0,1'])->group(function () {
     Route::put('/data-siswa/verify/gagal/{siswa}/{admin}', [SiswaController::class, 'set_gagal']);
     Route::put('/set-daftar/{pendaftaran}', [PendaftaranController::class, 'set_daftar']);
     Route::put('/set-tutup', [PendaftaranController::class, 'set_tutup']);
+    Route::put('/set-du-buka/{pendaftaran}', [PendaftaranController::class, 'set_du_buka']);
+    Route::put('/set-du-tutup', [PendaftaranController::class, 'set_du_tutup']);
     Route::put('/set-tempel/{pengumuman}', [PengumumanController::class, 'set_tempel']);
     Route::put('/set-lepas', [PengumumanController::class, 'set_lepas']);
 
@@ -73,10 +75,14 @@ Route::middleware(['auth', 'ceklevel:0,1'])->group(function () {
     // Route::get('/data-pendaftaran', [PagesController::class, 'data_pendaftaran']);
     // Route::get('/data-pengumuman', [PagesController::class, 'data_pengumuman']);
     Route::get('/data-laporan', [PagesController::class, 'data_laporan']);
+    Route::get('/data-laporan/export/', [SiswaController::class, 'export_siswa']);
 });
 
 Route::middleware(['auth', 'ceklevel:2'])->group(function () {
     Route::get('/pendaftaran', [PagesController::class, 'pendaftaran']);
+    Route::get('/cek-daftar-ulang/{user}', [PagesController::class, 'cek_daftar_ulang']);
+    Route::put('/daftar-ulang/{id}', [SiswaController::class, 'daftar_ulang']);
+    // Route::get('/daftar-ulang/{id_pendaftaran}', [PagesController::class, 'daftar_ulang']);
     Route::get('/logout-siswa', [LoginController::class, 'logout_siswa']);
     Route::post('/submit/daftar', [SiswaController::class, 'daftar']);
 });
