@@ -184,11 +184,34 @@
           @endif
         </div>
         <div class="modal-footer">
-          <form action="/data-siswa/verify/terima/{{$siswa->id}}/{{auth()->user()->username}}" method="post" class="d-inline">
+          <div class="btn-group">
+            <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{asset('assets/icons/check-circle.svg')}}" alt="">
+              Diterima
+            </button>
+            <ul class="dropdown-menu">
+              <li class="text-center">
+                <form action="/data-siswa/verify/terima/{{$siswa->id}}/{{auth()->user()->username}}" method="post" class="d-inline">
+                  @method('put')
+                  @csrf
+                  <input type="hidden" name="status_seleksi" value="{{$siswa->pilihan_1}}">
+                  <button class="btn btn-link text-decoration-none text-success" onclick="return confirm('Yakin Terima Siswa di {{$siswa->pilihan_1}} ?')">Terima di {{$siswa->pilihan_1}}</button>
+              </form>
+              </li>
+              <li class="text-center">
+                <form action="/data-siswa/verify/terima/{{$siswa->id}}/{{auth()->user()->username}}" method="post" class="d-inline">
+                    @method('put')
+                    @csrf
+                    <input type="hidden" name="status_seleksi" value="{{$siswa->pilihan_2}}">
+                    <button class="btn btn-link text-decoration-none text-success" onclick="return confirm('Yakin Terima Siswa di {{$siswa->pilihan_2}} ?')">Terima di {{$siswa->pilihan_2}}</button>
+                </form>
+              </li>              
+            </ul>
+          </div>
+          {{-- <form action="/data-siswa/verify/terima/{{$siswa->id}}/{{auth()->user()->username}}" method="post" class="d-inline">
             @method('put')
             @csrf
             <button class="badge btn btn-success border-0" onclick="return confirm('Yakin Terima Siswa ?')"><img src="{{asset('assets/icons/check-circle.svg')}}" alt="">Terima</button>
-        </form>
+        </form> --}}
         <form action="/data-siswa/verify/verifikasi/{{$siswa->id}}/{{auth()->user()->username}}" method="post" class="d-inline">
           @method('put')
           @csrf

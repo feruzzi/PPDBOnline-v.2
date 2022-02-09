@@ -504,9 +504,10 @@ class SiswaController extends Controller
         return redirect('/data-siswa')->with('success', 'Data Berhasil Dihapus !');
     }
 
-    public function set_terima(Siswa $siswa, $admin)
+    public function set_terima(Siswa $siswa, $admin, Request $request)
     {
-        $data['status_seleksi'] = "Diterima";
+        // dd($request->status_seleksi);
+        $data['status_seleksi'] = $request->status_seleksi;
         $data['username_admin'] = $admin;
         Siswa::where('id', $siswa->id)->update($data);
         return redirect('/data-siswa')->with('success', $siswa->nama_siswa . ' Telah Diterima !');
