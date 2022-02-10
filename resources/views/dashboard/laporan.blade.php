@@ -61,7 +61,20 @@
         </div>
     </div>
     <hr>
-    <h1 class="text-center">Laporan Diterima (Sudah Daftar Ulang)</h1>   
+    <h1 class="text-center">Laporan Diterima (Sudah Daftar Ulang)</h1>
+    <div class="row justify-content-center">
+        @foreach ($data_kelas as $kelas)
+        <div class="col-sm-6 col-lg-2">
+            <div class="card shadow border border-5">
+                <h1 class="text-secondary text-center fw-bolder mycard-title">{{$jml_kelas[$kelas->kelas->kode_kelas]}}</h1>
+                <div class="card-body">
+                <p class="card-text text-center fw-bolder fs-3">({{$kelas->kelas->kode_kelas}})</p>
+                <p class="card-text text-center fw-bolder fs-5">{{$kelas->kelas->nama_kelas}}</p>
+                </div>
+            </div>
+        </div> 
+        @endforeach   
+    </div>   
     <div class="row justify-content-center">
         <div class="col-sm-6 col-lg-2 py-3">
             <div class="card shadow border border-5">

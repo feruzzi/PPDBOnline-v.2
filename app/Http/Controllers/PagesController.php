@@ -150,30 +150,41 @@ class PagesController extends Controller
         // $siswa = Siswa::oldest();
         // $siswa = Siswa::count();
         // dd($siswa);
+        $jml_kelas = [];
         if (request('cari')) {
             // $siswa->where('id_pendaftaran', 'like', '%' . request('cari') . '%');
             // $formatid = request('cari');
+            $data_kelas = DetailPendaftaran::where('detail_kode_pendaftaran', request('cari'))->get();
+            foreach ($data_kelas as $kelas) {
+                $jml_kelas[$kelas->kelas->kode_kelas] = Siswa::where('jalur', request('cari'))->where('status_seleksi', $kelas->kelas->kode_kelas)->count();
+            }
+            // dd($jml_kelas['10-A3']);
+            // dd($jml_kelas['10-AG']);
             $formatid = Pendaftaran::where('kode_pendaftaran', request('cari'))->first();
             $pendaftar = Siswa::where('jalur', request('cari'))->count();
             $daftar_ulang = Siswa::where('jalur', request('cari'))->where('status_seleksi', 'Daftar Ulang')->count();
             $diterima = Siswa::where('jalur', request('cari'))->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal')->where('status_seleksi', '!=', 'Daftar Ulang')->where('status_seleksi', '!=', 'Terverifikasi')->count();
             $gagal = Siswa::where('jalur', request('cari'))->where('status_seleksi', 'Gagal')->count();
-            $laki = Siswa::where('jalur', request('cari'))->where('j_kelamin', 'Laki-Laki')->where('status_seleksi', 'Daftar Ulang')->count();
-            $perempuan = Siswa::where('jalur', request('cari'))->where('j_kelamin', 'Perempuan')->where('status_seleksi', 'Daftar Ulang')->count();
-            $smp = Siswa::where('jalur', request('cari'))->where('asal_sekolah', 'SMP')->where('status_seleksi', 'Daftar Ulang')->count();
-            $mts = Siswa::where('jalur', request('cari'))->where('asal_sekolah', 'MTs')->where('status_seleksi', 'Daftar Ulang')->count();
-            $lain = Siswa::where('jalur', request('cari'))->where('asal_sekolah', 'Lainnya')->where('status_seleksi', 'Daftar Ulang')->count();
+            $laki = Siswa::where('jalur', request('cari'))->where('j_kelamin', 'Laki-Laki')->where('status_du', 1)->count();
+            $perempuan = Siswa::where('jalur', request('cari'))->where('j_kelamin', 'Perempuan')->where('status_du', 1)->count();
+            $smp = Siswa::where('jalur', request('cari'))->where('asal_sekolah', 'SMP')->where('status_du', 1)->count();
+            $mts = Siswa::where('jalur', request('cari'))->where('asal_sekolah', 'MTs')->where('status_du', 1)->count();
+            $lain = Siswa::where('jalur', request('cari'))->where('asal_sekolah', 'Lainnya')->where('status_du', 1)->count();
         } elseif ($formatid != null) {
             // $siswa->where('id_pendaftaran', 'like', '%' . $formatid . '%');
+            $data_kelas = DetailPendaftaran::where('detail_kode_pendaftaran', $formatid->kode_pendaftaran)->get();
+            foreach ($data_kelas as $kelas) {
+                $jml_kelas[$kelas->kelas->kode_kelas] = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('status_seleksi', $kelas->kelas->kode_kelas)->count();
+            }
             $pendaftar = Siswa::where('jalur', $formatid->kode_pendaftaran)->count();
             $daftar_ulang = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('status_seleksi', 'Daftar Ulang')->count();
             $diterima = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('status_seleksi', '!=', 'seleksi')->where('status_seleksi', '!=', 'Gagal')->where('status_seleksi', '!=', 'Daftar Ulang')->where('status_seleksi', '!=', 'Terverifikasi')->count();
             $gagal = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('status_seleksi', 'Gagal')->count();
-            $laki = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('j_kelamin', 'Laki-Laki')->where('status_seleksi', 'Daftar Ulang')->count();
-            $perempuan = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('j_kelamin', 'Perempuan')->where('status_seleksi', 'Daftar Ulang')->count();
-            $smp = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('asal_sekolah', 'SMP')->where('status_seleksi', 'Daftar Ulang')->count();
-            $mts = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('asal_sekolah', 'MTs')->where('status_seleksi', 'Daftar Ulang')->count();
-            $lain = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('asal_sekolah', 'Lainnya')->where('status_seleksi', 'Daftar Ulang')->count();
+            $laki = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('j_kelamin', 'Laki-Laki')->where('status_du', 1)->count();
+            $perempuan = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('j_kelamin', 'Perempuan')->where('status_du', 1)->count();
+            $smp = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('asal_sekolah', 'SMP')->where('status_du', 1)->count();
+            $mts = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('asal_sekolah', 'MTs')->where('status_du', 1)->count();
+            $lain = Siswa::where('jalur', $formatid->kode_pendaftaran)->where('asal_sekolah', 'Lainnya')->where('status_du', 1)->count();
         }
         // else {
         //     $formatid = Pendaftaran::last();
@@ -202,6 +213,8 @@ class PagesController extends Controller
             'mts' => $mts,
             'lain' => $lain,
             'detail_pendaftaran' => $formatid,
+            'data_kelas' => $data_kelas,
+            'jml_kelas' => $jml_kelas,
             // 'data_siswa' => $siswa->with('berkas')->get(),
         ]);
         // return view('dashboard.laporan', [
