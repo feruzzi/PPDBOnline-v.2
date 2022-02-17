@@ -18,7 +18,72 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
      @endif
-    <div class="text-center">
+     <div class="row">
+        <div class="col-sm-12 col-lg-4">
+            <form action="{{url('/')}}">
+            <div class="form-floating my-3 d-flex">
+                    <select class="form-select @error('cari') is-invalid @enderror" id="cari" name="cari" aria-label="tahun_pendaftaran">
+                        {{-- <option selected>{{$filter->nama_pendaftaran}}</option> --}}
+                        @foreach($data_pendaftaran as $pendaftaran)
+                        <option {{($detail_pendaftaran->kode_pendaftaran===$pendaftaran->kode_pendaftaran)?'selected':''}} value="{{$pendaftaran->kode_pendaftaran}}">{{$pendaftaran->nama_pendaftaran}}</option>
+                        @endforeach                                          
+                    </select>
+                    <label for="cari">Tahun</label>
+                    @error('cari_tahun_pendaftaran')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                    </div>
+                    @enderror
+                    <button class="btn btn-primary d-inline mx-3" type="submit">Cari</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <h1 class="text-center">Papan Pendaftaran</h1>
+        <h2 class="text-center">{{$detail_pendaftaran->nama_pendaftaran}}</h2>
+        <div class="table-responsive">
+            <table class="table table-sm display" id="tb_siswa_home">
+              <thead>
+                  <th>No</th>
+                  <th>ID Pendaftaran</th>
+                  <th>NISN</th>              
+                  <th>Nama</th>              
+                  <th>Pilihan 1</th>              
+                  <th>Pilihan 2</th>              
+                  <th>Skor</th>                                
+                  <th>Status</th>
+              </thead>
+              <tbody>
+                  @foreach($data_siswa as $siswa)
+                  <tr>
+                      <td>{{$loop->iteration}}</td>
+                      <td>{{$siswa->id_pendaftaran}}</td>
+                      <td>{{$siswa->nisn}}</td>
+                      <td>{{$siswa->nama_siswa}}</td>                  
+                      <td>{{$siswa->pilihan_1}}</td>
+                      <td>{{$siswa->pilihan_2}}</td>                                   
+                      <td>{{$siswa->total}}</td>                                                              
+                      <td class="align-middle">
+                        @if($siswa->status_seleksi=="Diterima")
+                        <h5><span class="badge bg-success">{{$siswa->status_seleksi}}</span></h5>
+                        @elseif($siswa->status_seleksi=="Seleksi")
+                        <h5><span class="badge bg-secondary">{{$siswa->status_seleksi}}</span></h5>
+                        @elseif($siswa->status_seleksi=="Terverifikasi")
+                        <h5><span class="badge bg-info">{{$siswa->status_seleksi}}</span></h5>
+                        @elseif($siswa->status_seleksi=="Gagal")
+                        <h5><span class="badge bg-danger">{{$siswa->status_seleksi}}</span></h5>
+                        @else
+                        <h5><span class="badge bg-success">Diterima {{$siswa->status_seleksi}}</span></h5>
+                        @endif
+                      </td>
+                  </tr>
+                  @endforeach
+              </tbody>
+            </table>
+        </div> 
+    </div>
+    {{-- <div class="text-center">
         <h1>Profil Sekolah</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, rerum in nemo tempora illum consequatur aliquid voluptatum quis, ex nisi vitae facilis iste nam deserunt nulla. Eum, asperiores ut? Facere?
             Quam, fugit quasi laudantium vitae est quisquam voluptatibus molestias error placeat. Saepe et illum voluptatibus velit optio, laboriosam magni dicta sequi quam quae a ea? Ipsum a repudiandae deserunt cumque.
@@ -39,6 +104,6 @@
             </ul>
             <hr>
             <h1>Lainnya</h1>
-        </div>
+        </div> --}}
 </div>
 @endsection

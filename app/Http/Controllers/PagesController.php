@@ -15,8 +15,25 @@ class PagesController extends Controller
 {
     public function home()
     {
+        $formatid = DB::table('set_pendaftaran')->where('id', 1)->value('set_kode_pendaftaran');
+        // $siswa = Siswa::oldest();
+        $formatid = Pendaftaran::where('kode_pendaftaran', $formatid)->first();
+        $siswa = Siswa::selectRaw('*, nilai_bindo+nilai_matematika+nilai_ipa+rapot_bindo+rapot_matematika+rapot_ipa+rapot_bing+total_nilai_berkas AS total')->orderBy('total', 'desc');
+        if (request('cari')) {
+            // $siswa->where('id_pendaftaran', 'like', '%' . request('cari') . '%');
+            $formatid = Pendaftaran::where('kode_pendaftaran', request('cari'))->first();
+            $siswa->where('jalur', request('cari'));
+        } elseif ($formatid != null) {
+            // $siswa->where('id_pendaftaran', 'like', '%' . $formatid . '%');
+            $siswa->where('jalur', $formatid->kode_pendaftaran);
+        }
         return view('home', [
             'title' => 'Home',
+            'filter' => Pendaftaran::all()->last(),
+            'data_pendaftaran' => Pendaftaran::all(),
+            'data_siswa' => $siswa->get(),
+            'detail_pendaftaran' => $formatid,
+
         ]);
     }
     public function pendaftaran()
