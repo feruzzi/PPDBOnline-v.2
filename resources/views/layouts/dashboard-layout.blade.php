@@ -93,6 +93,16 @@
     $('#tb_siswa').DataTable();
 } );
 </script>
+<script>
+    $(document).ready(function() {
+    $('#tb_user_admin').DataTable();
+} );
+</script>
+<script>
+    $(document).ready(function() {
+    $('#tb_user_siswa').DataTable();
+} );
+</script>
 {{-- <script>
     const data = {
   labels: [

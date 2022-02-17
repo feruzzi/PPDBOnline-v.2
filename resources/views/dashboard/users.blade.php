@@ -32,10 +32,10 @@
               </div>
                @endif
                 <div class="d-flex">
-                    <button class="ms-auto btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahUser">+ Tambah Data</button>
+                    <button class="ms-auto btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambahUser">+ Tambah Data</button>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-sm">
+                    <table class="table table-sm display" id="tb_user_admin">
                       <thead>
                           <th>No</th>
                           <th>Nama User</th>
@@ -88,10 +88,10 @@
               </div>
                @endif
                 <div class="d-flex">
-                    <button class="ms-auto btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahUserSiswa">+ Tambah Data</button>
+                    <button class="ms-auto btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambahUserSiswa">+ Tambah Data</button>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-sm">
+                    <table class="table table-sm display" id="tb_user_siswa">
                       <thead>
                           <th>No</th>
                           <th>Nama User</th>
