@@ -251,6 +251,9 @@ class PagesController extends Controller
     {
         // $user = User::where('remember_token', $email)->first();
         $cek_du = Siswa::where('username_siswa', $user)->first();
+        if (is_null($cek_du)) {
+            return redirect('/')->with('delete', 'Anda Belum Pernah Melakukan Pendaftaran');
+        }
         // dd($cek_du->jalur);
         $jalur_du = DB::table('set_pendaftaran')->where('id', 2)->value('set_kode_pendaftaran');
         if ($cek_du->status_seleksi != "Seleksi" && $cek_du->status_seleksi != "Gagal" && $cek_du->status_seleksi != "Terverifikasi") {
