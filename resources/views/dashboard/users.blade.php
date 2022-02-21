@@ -40,6 +40,7 @@
                           <th>No</th>
                           <th>Nama User</th>
                           <th>Username</th>
+                          <th>email</th>
                           <th>Last Edited</th>
                           <th>Aksi</th>
                       </thead>
@@ -49,6 +50,7 @@
                               <td>{{$loop->iteration}}</td>
                               <td>{{$user->nama}}</td>
                               <td>{{$user->username}}</td>
+                              <td>{{$user->email}}</td>
                               <td>{{$user->updated_at}}</td>
                               <td class="text-center">
                                 {{-- <a href="/data-dataUsers/{{$user->id}}" class="text-decoration-none myicon rounded-circle p-1">
@@ -96,6 +98,7 @@
                           <th>No</th>
                           <th>Nama User</th>
                           <th>Username</th>
+                          <th>Email</th>
                           <th>Last Edited</th>
                           <th>Aksi</th>
                           <th>Status</th>
@@ -106,6 +109,7 @@
                               <td>{{$loop->iteration}}</td>
                               <td>{{$user->nama}}</td>
                               <td>{{$user->username}}</td>
+                              <td>{{$user->email}}</td>
                               <td>{{$user->updated_at}}</td>
                               <td class="text-start">
                                 {{-- <a href="/data-dataUsers/{{$user->id}}" class="text-decoration-none myicon rounded-circle p-1">
