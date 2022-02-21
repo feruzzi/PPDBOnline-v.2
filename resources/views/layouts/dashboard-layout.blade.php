@@ -103,6 +103,11 @@
     $('#tb_user_siswa').DataTable();
 } );
 </script>
+<script>
+    $(document).ready(function() {
+    $('#tb_seleksi').DataTable();
+} );
+</script>
 {{-- <script>
     const data = {
   labels: [

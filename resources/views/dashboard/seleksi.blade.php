@@ -69,7 +69,7 @@
             </table>                                                    
         </div>
         <div class="table-responsive">
-            <table class="table table-sm">
+            <table class="table table-sm" id="tb_seleksi">
               <thead>
                   <th>No</th>
                   <th>ID Pendaftaran</th>
@@ -145,10 +145,7 @@
                     </tr>
                     @endforeach
                 </tbody>
-            </table>
-            <div class="d-flex justify-content-end">
-                {{$data_siswa->links()}}
-            </div>
+            </table>            
             <button class="badge btn btn-success border-0" onclick="return confirm('Yakin Seleksi ?')"><img src="{{asset('assets/icons/check-circle.svg')}}" alt="">Seleksi</button>
                 </form>                                              
         </div> 

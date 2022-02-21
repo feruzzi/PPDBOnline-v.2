@@ -86,7 +86,7 @@ class SiswaController extends Controller
             // 'data_berkas' => Berkas::all(),
             'data_kelas' => $data_kelas,
             // 'data_siswa' => $siswa->get(),
-            'data_siswa' => $siswa->paginate(10),
+            'data_siswa' => $siswa->get(),
             'detail_pendaftaran' => $formatid,
         ]);
     }
