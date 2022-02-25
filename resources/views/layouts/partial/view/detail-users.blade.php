@@ -1,15 +1,7 @@
-@if($user->level == 2)
-<a id="set_edit_user" href="#modalEditSiswa-{{$user->id}}" class="text-decoration-none myicon rounded-circle p-1"
-    data-bs-toggle="modal">
-    <img class="img-fluid" src="{{asset('assets/icons/edit-2.svg')}}" alt="">
-</a>
-@else
 <a id="set_edit_user" href="#modalEditUser-{{$user->id}}" class="text-decoration-none myicon rounded-circle p-1"
     data-bs-toggle="modal">
     <img class="img-fluid" src="{{asset('assets/icons/edit-2.svg')}}" alt="">
 </a>
-@endif
-
 <a id="set_dtl_user" href="#modalDetailUser-{{$user->id}}" class="text-decoration-none myicon rounded-circle p-1"
     data-bs-toggle="modal">
     <img class="img-fluid" src="{{asset('assets/icons/eye.svg')}}" alt="">
