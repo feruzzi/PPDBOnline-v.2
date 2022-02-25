@@ -15,6 +15,9 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 use App\Exports\SiswaExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Exception;
+use App\Mail\buktiEmail;
+use Illuminate\Support\Facades\Mail;
+use PDF;
 
 class SiswaController extends Controller
 {
@@ -550,6 +553,33 @@ class SiswaController extends Controller
         $validatedData['status_du'] = 1;
         Siswa::where('id', $id)->update($validatedData);
         return redirect('/')->with('success', 'Berhasil Melakukan Daftar Ulang !');
+    }
+    public function bukti_daftar(Siswa $siswa)
+    {
+        $data = [
+            'jalur' => $siswa->jalur,
+            'id_pendaftaran' => $siswa->id_pendaftaran,
+            'nisn' => $siswa->nisn,
+            'nama_siswa' => $siswa->nama_siswa,
+            'j_kelamin' => $siswa->j_kelamin,
+            't_lahir' => $siswa->t_lahir,
+            'tgl_lahir' => $siswa->tgl_lahir,
+            'agama' => $siswa->agama,
+            'asal_sekolah' => $siswa->asal_sekolah,
+            'nama_sekolah' => $siswa->nama_sekolah,
+            'pilihan_1' => $siswa->pilihan_1,
+            'pilihan_2' => $siswa->pilihan_2,
+            'no_hp' => $siswa->no_hp,
+
+        ];
+        $pdf = PDF::loadView('emails.bukti-daftar', $data);
+        $details = [
+            'title' => 'Bukti Pendaftaran PPDB ONLINE',
+            'body' => 'Berikut merupakan bukti pendaftaran PPDB ONLINE Anda, Silahkan bukti dibawa untuk proses selanjutnya',
+            'pdf' => $pdf,
+        ];
+        Mail::to($siswa->user->email)->send(new buktiEmail($details, $pdf));
+        return redirect('/data-siswa')->with('success', 'Berhasil Mengirimkan Email ke ' . $siswa->user->email . ' !');
     }
     public function export_siswa(Request $request)
     {

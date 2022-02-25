@@ -16,4 +16,8 @@ class Siswa extends Model
     {
         return $this->hasMany(Berkas::class, 'id_pendaftaran_berkas', 'id_pendaftaran');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username_siswa', 'username');
+    }
 }

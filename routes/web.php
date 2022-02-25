@@ -75,6 +75,7 @@ Route::middleware(['auth', 'ceklevel:0,1'])->group(function () {
     // Route::get('/data-pendaftaran', [PagesController::class, 'data_pendaftaran']);
     // Route::get('/data-pengumuman', [PagesController::class, 'data_pengumuman']);
     Route::get('/data-laporan', [PagesController::class, 'data_laporan']);
+    Route::post('/kirim-email/bukti/{siswa}', [SiswaController::class, 'bukti_daftar']);
     Route::get('/data-laporan/export/', [SiswaController::class, 'export_siswa']);
 });
 

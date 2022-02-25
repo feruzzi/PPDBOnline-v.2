@@ -212,6 +212,10 @@
             @csrf
             <button class="badge btn btn-success border-0" onclick="return confirm('Yakin Terima Siswa ?')"><img src="{{asset('assets/icons/check-circle.svg')}}" alt="">Terima</button>
         </form> --}}
+      <form action="/kirim-email/bukti/{{$siswa->id}}" method="post" class="d-inline">          
+          @csrf
+          <button class="badge btn btn-info border-0" onclick="return confirm('Yakin Kirim Email Siswa({{$siswa->user->email}}) ?')"><img src="{{asset('assets/icons/star.svg')}}" alt="">Kirim Email</button>
+      </form>
         <form action="/data-siswa/verify/verifikasi/{{$siswa->id}}/{{auth()->user()->username}}" method="post" class="d-inline">
           @method('put')
           @csrf
