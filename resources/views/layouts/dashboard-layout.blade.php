@@ -28,11 +28,15 @@
                 {{-- @if(auth()->user()->is_admin=="1")
                 <a class="list-group-item list-group-item-action list-group-item-light {{($title==="Users")?'active':''}} p-3" href="{{url('/dashboard/users')}}">Data User</a>
                 @endif --}}
+                @if(auth()->user()->level==0)
                 <a class="list-group-item list-group-item-action list-group-item-light {{($title==="Users")?'active':''}} p-3" href="{{url('/data-users')}}">Data Users</a>
+                @endif
                 <a class="list-group-item list-group-item-action list-group-item-light {{($title==="Siswa")?'active':''}} p-3" href="{{url('/data-siswa')}}">Data Siswa</a>
+                @if(auth()->user()->level==0)
                 <a class="list-group-item list-group-item-action list-group-item-light {{($title==="Kelas")?'active':''}} p-3" href="{{url('/data-kelas')}}">Data Kelas</a>
                 <a class="list-group-item list-group-item-action list-group-item-light {{($title==="Pendaftaran")?'active':''}} p-3" href="{{url('/data-pendaftaran')}}">Data Pendaftaran</a>
                 <a class="list-group-item list-group-item-action list-group-item-light {{($title==="Pengumuman")?'active':''}} p-3" href="{{url('/data-pengumuman')}}">Data Pengumuman</a>
+                @endif
                 <a class="list-group-item list-group-item-action list-group-item-light {{($title==="Seleksi")?'active':''}} p-3" href="{{url('/seleksi')}}">Seleksi</a>
                 <a class="list-group-item list-group-item-action list-group-item-light {{($title==="Laporan")?'active':''}} p-3" href="{{url('/data-laporan')}}">Laporan</a>
                 {{-- <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
